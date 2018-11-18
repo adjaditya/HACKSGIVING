@@ -9,8 +9,6 @@ public class Recipie {
     }
 
     // Getter
-
-
     public String getName() {
         return name;
     }

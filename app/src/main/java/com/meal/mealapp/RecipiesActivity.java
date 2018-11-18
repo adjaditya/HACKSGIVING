@@ -20,20 +20,31 @@ public class RecipiesActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private List<Recipie> recipiesList;
-    private RecipiesActivity.RecipiesAdapter mAdapter;
+    private RecipiesAdapter mAdapter;
+    private android.support.v7.widget.Toolbar toolbar;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_ingredients);
-        recyclerView = findViewById(R.id.recyclerViewInventory);
+        setContentView(R.layout.activity_recipies);
+        recyclerView = findViewById(R.id.recyclerViewRecipies);
+        toolbar = findViewById(R.id.toolbar);
+
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_keyboard_backspace_black_24dp));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // what do you want here
+                finish();
+            }
+        });
 
 
         recipiesList = new ArrayList<>();
 
-        mAdapter = new RecipiesActivity.RecipiesAdapter(this, recipiesList);
+        mAdapter = new RecipiesAdapter(this, recipiesList);
 
 
         RecyclerView.LayoutManager mlayoutManager = new LinearLayoutManager(this);
@@ -46,6 +57,8 @@ public class RecipiesActivity extends AppCompatActivity {
 
     public void prepareData() {
         // Get From Database
+        Recipie r = new Recipie("Nasi Ayam Broccoli");
+        recipiesList.add(r);
 
 
         mAdapter.notifyDataSetChanged();
@@ -54,54 +67,54 @@ public class RecipiesActivity extends AppCompatActivity {
 
 
 
-    class RecipiesAdapter extends RecyclerView.Adapter<RecipiesActivity.RecipiesAdapter.MyViewHolder> {
+
+
+
+
+    class RecipiesAdapter extends RecyclerView.Adapter<RecipiesAdapter.MyViewHolder> {
         private Context context;
-        private List<Recipie> recipiesList;
+        private List<Recipie> recipieList;
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
-
-            TextView name;
-            CardView recipeCard;
+            public TextView name;
+            public CardView card;
 
             public MyViewHolder(View view) {
                 super(view);
-
-                name = findViewById(R.id.recipeName);
-                recipeCard = findViewById(R.id.recipeCard);
-
+                name = view.findViewById(R.id.recipeName);
+                card = view.findViewById(R.id.recipeCard);
             }
         }
 
-        // Adapter
-
-        public RecipiesAdapter(Context context, List<Recipie> recipiesList) {
+        public RecipiesAdapter(Context context, List<Recipie> recipieList) {
             this.context = context;
-            this.recipiesList = recipiesList;
+            this.recipieList = recipieList;
         }
 
         @Override
-        public RecipiesActivity.RecipiesAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View ItemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_recipe, parent, false);
-            return new RecipiesActivity.RecipiesAdapter.MyViewHolder(ItemView);
+        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View ItemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_recipies, parent, false);
+            return new RecipiesAdapter.MyViewHolder(ItemView);
         }
 
         @Override
-        public void onBindViewHolder(RecipiesActivity.RecipiesAdapter.MyViewHolder holder, int position) {
-            Recipie recipie = recipiesList.get(position);
+        public void onBindViewHolder(RecipiesAdapter.MyViewHolder holder, int position) {
+            Recipie recipie = recipieList.get(position);
             holder.name.setText(recipie.getName());
 
-            // restock product click listener
-            holder.recipeCard.setOnClickListener(new View.OnClickListener() {
+            holder.card.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
                 }
             });
 
+
         }
 
         public int getItemCount() {
-            return recipiesList.size();
+            return recipieList.size();
         }
+
     }
 }

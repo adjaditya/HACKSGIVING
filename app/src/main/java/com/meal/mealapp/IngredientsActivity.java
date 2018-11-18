@@ -65,13 +65,12 @@ public class IngredientsActivity extends AppCompatActivity {
 
             public MyViewHolder(View view) {
                 super(view);
-
-                units = findViewById(R.id.units);
-                name = findViewById(R.id.ingredientName);
-                quantity = findViewById(R.id.quantityAmt);
-                calories = findViewById(R.id.caloriesAmt);
-                restock = findViewById(R.id.restockBtn);
-                edit = findViewById(R.id.editBtn);
+                units = view.findViewById(R.id.units);
+                name = view.findViewById(R.id.ingredientName);
+                quantity = view.findViewById(R.id.quantityAmt);
+                calories = view.findViewById(R.id.caloriesAmt);
+                restock = view.findViewById(R.id.restockBtn);
+                edit = view.findViewById(R.id.editBtn);
             }
         }
 
